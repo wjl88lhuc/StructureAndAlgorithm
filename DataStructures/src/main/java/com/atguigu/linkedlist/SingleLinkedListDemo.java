@@ -1,5 +1,7 @@
 package com.atguigu.linkedlist;
 
+import org.junit.Test;
+
 import java.awt.*;
 
 public class SingleLinkedListDemo {
@@ -13,9 +15,15 @@ public class SingleLinkedListDemo {
         SingleLinkedList singleLinkedList = new SingleLinkedList();
         singleLinkedList.addByOrder(hero1);
         singleLinkedList.addByOrder(hero4);
+        System.out.println("节点个数： " + singleLinkedList.getLength());
         singleLinkedList.addByOrder(hero3);
         singleLinkedList.addByOrder(hero2);
+        System.out.println("节点个数： " + singleLinkedList.getLength());
         //显示
+        singleLinkedList.showLinkedList();
+
+        System.out.println("*************链表反转之后**************");
+        singleLinkedList.reverse();
         singleLinkedList.showLinkedList();
 
         //修改林冲称号
@@ -28,9 +36,16 @@ public class SingleLinkedListDemo {
         singleLinkedList.delete(hero2);
         singleLinkedList.delete(hero1);
         singleLinkedList.delete(hero3);
+        System.out.println("节点个数： " + singleLinkedList.getLength());
         singleLinkedList.delete(hero4);
         System.out.println("*************");
         singleLinkedList.showLinkedList();
+    }
+
+    //方法：获取到单链表的节点的个数（如果是带头节点的链表，需求不统计头节点）
+    @Test
+    public void testGetLent(){
+
     }
 }
 //定义SingleLinkedList管理我们的英雄
@@ -148,6 +163,47 @@ class SingleLinkedList {
             }
             temp = temp.next;
         }
+    }
+
+    //获取到单链表的节点的个数（如果是带头结点的链表，需求不统计头节点）
+    public int getLength(){
+        if(head.next == null){
+            return 0;
+        }
+        HeroNode temp = head.next;
+        int sum = 0;
+        while (true){
+            if(temp == null){
+                break;
+            }
+            sum++;
+            temp =temp.next;
+        }
+        return sum;
+    }
+
+    //单链表的反转(腾讯面试题)
+    //思路：定义一个新的节点reverseHead,遍历原始链表，把第一个当作最后一个节点，往后遍历取到的节点依次插入头节点之后
+    public void reverse(){
+        HeroNode reverseHead = new HeroNode(0, "", "");
+        if(head.next == null){//如果链表是空的，那么就直接返回，不用遍历了
+            return;
+        }
+        //设置反转后链表的最后一个节点
+        HeroNode reverseLastNode = head.next;
+        head.next = head.next.next;
+        reverseLastNode.next = null;
+        reverseHead.next = reverseLastNode;
+        while (true){
+            if(head.next == null){//说明已经遍历到链表的最后了，直接退出循环
+                break;
+            }
+            HeroNode getNode = head.next;
+            head.next = head.next.next;
+            getNode.next = reverseHead.next;
+            reverseHead.next =getNode;
+        }
+        head = reverseHead;
     }
 
 }
