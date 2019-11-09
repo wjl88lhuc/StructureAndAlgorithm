@@ -2,7 +2,6 @@ package com.atguigu.linkedlist;
 
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.Stack;
 
 public class SingleLinkedListDemo {

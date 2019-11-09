@@ -2,7 +2,7 @@ package com.atguigu.linkedlist;
 
 import java.util.Stack;
 
-//演示栈stack的基本使用
+//演示栈stack的基本使用，栈的特点：先进后出
 public class StackDemo {
     public static void main(String[] args) {
         Stack<String> strings = new Stack<>();
