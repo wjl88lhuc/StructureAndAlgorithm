@@ -3,6 +3,7 @@ package com.atguigu.linkedlist;
 import org.junit.Test;
 
 import java.awt.*;
+import java.util.Stack;
 
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
@@ -45,7 +46,21 @@ public class SingleLinkedListDemo {
     //方法：获取到单链表的节点的个数（如果是带头节点的链表，需求不统计头节点）
     @Test
     public void testGetLent(){
+        HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
+        HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
+        HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
+        HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
+        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        singleLinkedList.addByOrder(hero1);
+        singleLinkedList.addByOrder(hero4);
+        System.out.println("节点个数： " + singleLinkedList.getLength());
+        singleLinkedList.addByOrder(hero3);
+        singleLinkedList.addByOrder(hero2);
+        singleLinkedList.showLinkedList();
 
+        //测试从链表尾部打印
+        System.out.println("**************");
+        singleLinkedList.reversePrint();
     }
 }
 //定义SingleLinkedList管理我们的英雄
@@ -186,7 +201,7 @@ class SingleLinkedList {
     //思路：定义一个新的节点reverseHead,遍历原始链表，把第一个当作最后一个节点，往后遍历取到的节点依次插入头节点之后
     public void reverse(){
         HeroNode reverseHead = new HeroNode(0, "", "");
-        if(head.next == null){//如果链表是空的，那么就直接返回，不用遍历了
+        if(head.next == null || head.next.next == null){//如果链表是空的或者只有一个节点，那么就直接返回，不用遍历了
             return;
         }
         //设置反转后链表的最后一个节点
@@ -204,6 +219,23 @@ class SingleLinkedList {
             reverseHead.next =getNode;
         }
         head = reverseHead;
+    }
+
+    //从尾到头打印单链表 【百度面试题，要求方式1：反向遍历 。 方式2：Stack栈】
+    public void reversePrint(){//我们使用第二中方式，栈的特点是：先进先出。如果使用反转再打印，那么就容易改变链表的结构
+        if(head.next == null){//如果链表是空的，那么就直接返回，不打印
+            return;
+        }
+        Stack<HeroNode> heroNodes = new Stack<HeroNode>();
+        HeroNode curNode = head.next;
+        while (curNode != null){
+            heroNodes.push(curNode);//push方法与add方法都是入栈操作
+            curNode = curNode.next;
+        }
+        //将栈中的节点打印就可以了
+        while (heroNodes.size() > 0){
+            System.out.println(heroNodes.pop());//pop出栈操作
+        }
     }
 
 }
