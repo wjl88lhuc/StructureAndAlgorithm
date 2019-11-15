@@ -68,6 +68,41 @@ public class QuickSort {
         }
     }
 
+    public static void quickSorts2(int[] arr,int left,int right){
+        if (left > right){
+            return;
+        }
+        //让第一个数字当基准数
+        int lTemp =left;
+        int rTemp =right;
+        int base = arr[left];
+        int vTmp;
+        while (lTemp < rTemp){
+            //从右往左找
+            while (lTemp < rTemp && arr[rTemp] >= base){
+                rTemp--;
+            }
+            while (lTemp < rTemp &&  arr[lTemp] <= base){
+                lTemp++;
+            }
+
+            if (lTemp < rTemp){
+                vTmp = arr[lTemp];
+                arr[lTemp]=arr[rTemp];
+                arr[rTemp] = vTmp;
+            }
+        }
+        //最后将基准为与i和j相等位置的数字交换
+        arr[left] = arr[lTemp];
+        arr[lTemp] = base;
+
+        //递归调用左半数组
+        quickSorts2(arr,left,rTemp-1);
+
+        //递归调用右半数组
+        quickSorts2(arr,rTemp + 1,right);
+    }
+
 }
 
 
